@@ -6,16 +6,20 @@ INC := -I/usr/include/mpi
 
 LIBS := -lmpi -L/opt/acml5.3.1/gfortran64/lib -lacml
 
-vpath %.cpp pots/pot_pair
-vpath %.cpp pots/pot_pair_spline
-vpath %.cpp pots/pot_eam
-vpath %.cpp pots/pot_eam_spline
-vpath %.cpp pots/pot_meam
-vpath %.cpp pots/pot_meam_spline
-vpath %.cpp pots/pot_jmeam
-vpath %.cpp pots/pot_jmeam_spline
-vpath %.cpp pots/pot_jmeam2
-vpath %.cpp pots/pot_jmeam2_spline
+OBJDIR := build
+SRCDIR := src
+
+vpath %.cpp $(SRCDIR)
+vpath %.cpp $(SRCDIR)/pots/pot_pair
+vpath %.cpp $(SRCDIR)/pots/pot_pair_spline
+vpath %.cpp $(SRCDIR)/pots/pot_eam
+vpath %.cpp $(SRCDIR)/pots/pot_eam_spline
+vpath %.cpp $(SRCDIR)/pots/pot_meam
+vpath %.cpp $(SRCDIR)/pots/pot_meam_spline
+vpath %.cpp $(SRCDIR)/pots/pot_jmeam
+vpath %.cpp $(SRCDIR)/pots/pot_jmeam_spline
+vpath %.cpp $(SRCDIR)/pots/pot_jmeam2
+vpath %.cpp $(SRCDIR)/pots/pot_jmeam2_spline
 
 
 ######################################################################################
@@ -42,14 +46,20 @@ OPT_OBJS := pot_eam.o pot_eam_spline.o \
 	    pot_meam.o pot_meam_spline.o \
 	    pot_pair.o pot_pair_spline.o
 
-meamz: $(OBJS) $(OPT_OBJS)
-	        $(CXX) $(OBJS) $(OPT_OBJS) -o $@ $(LIBS)
+PATH_OBJS := $(patsubst %.o,$(OBJDIR)/%.o,$(OBJS))
+PATH_OPT_OBJS := $(patsubst %.o,$(OBJDIR)/%.o,$(OPT_OBJS))
 
-$(OBJS): %.o: %.cpp
-	        $(CXX) $(CXXFLAGS) $(INC) -c $<
+$(OBJDIR)/meamz: $(PATH_OBJS) $(PATH_OPT_OBJS) | $(OBJDIR)
+	        $(CXX) $(PATH_OBJS) $(PATH_OPT_OBJS) -o $@ $(LIBS)
 
-$(OPT_OBJS): %.o: %.cpp
-		$(CXX) $(OPT_CXXFLAGS) $(INC) -c $<
+$(PATH_OBJS): $(OBJDIR)/%.o: %.cpp | $(OBJDIR)
+	        $(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+
+$(PATH_OPT_OBJS): $(OBJDIR)/%.o: %.cpp | $(OBJDIR)
+		$(CXX) $(OPT_CXXFLAGS) $(INC) -c $< -o $@
+
+$(OBJDIR):
+		mkdir -p $@
 
 clean:
-	        rm -fr *.o
+	        rm -fr build/*.o
