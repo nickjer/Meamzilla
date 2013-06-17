@@ -1,0 +1,6 @@
+#!/bin/bash
+
+module swap intel gnu
+module load mkl
+export PATH=~osu4705/gcc-oakley/bin:$PATH
+export LD_LIBRARY_PATH=~osu4705/gcc-oakley/lib64:$LD_LIBRARY_PATH

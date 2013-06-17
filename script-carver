@@ -1,0 +1,8 @@
+#!/bin/bash
+
+module swap pgi gcc
+module swap openmpi openmpi-gcc
+module load mkl
+
+export PATH=~nicklas/gcc-carver/bin:$PATH
+export LD_LIBRARY_PATH=~nicklas/gcc-carver/lib64:$LD_LIBRARY_PATH

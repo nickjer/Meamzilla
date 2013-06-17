@@ -1,0 +1,55 @@
+CXX := g++
+CXXFLAGS := -std=c++11 -Ofast -march=corei7 
+OPT_CXXFLAGS := ${CXXFLAGS} -funroll-all-loops
+
+INC := -I/usr/include/mpi
+
+LIBS := -lmpi -L/opt/acml5.3.1/gfortran64/lib -lacml
+
+vpath %.cpp pots/pot_pair
+vpath %.cpp pots/pot_pair_spline
+vpath %.cpp pots/pot_eam
+vpath %.cpp pots/pot_eam_spline
+vpath %.cpp pots/pot_meam
+vpath %.cpp pots/pot_meam_spline
+vpath %.cpp pots/pot_jmeam
+vpath %.cpp pots/pot_jmeam_spline
+vpath %.cpp pots/pot_jmeam2
+vpath %.cpp pots/pot_jmeam2_spline
+
+
+######################################################################################
+
+OBJS := atom.o atom_vec.o basis.o cell.o comm.o config.o \
+	input.o line_min_brent.o line_min.o main.o meamzilla.o \
+	opt_genalg.o optimizer.o opt_list.o opt_powell.o opt_simann.o \
+	pair.o potential.o pot_fns.o pot_list.o random.o \
+	spline3eq.o spline5eq.o spline.o timer.o triplet.o universe.o \
+	atom_eam.o pair_eam.o \
+	atom_eam_spline.o pair_eam_spline.o \
+	atom_jmeam2.o pair_jmeam2.o triplet_jmeam2.o \
+	atom_jmeam2_spline.o pair_jmeam2_spline.o triplet_jmeam2_spline.o \
+	atom_jmeam.o pair_jmeam.o triplet_jmeam.o \
+	atom_jmeam_spline.o pair_jmeam_spline.o triplet_jmeam_spline.o \
+	atom_meam.o pair_meam.o triplet_meam.o \
+	atom_meam_spline.o pair_meam_spline.o triplet_meam_spline.o \
+	atom_pair.o pair_pair.o \
+	atom_pair_spline.o pair_pair_spline.o
+
+OPT_OBJS := pot_eam.o pot_eam_spline.o \
+	    pot_jmeam2.o pot_jmeam2_spline.o \
+	    pot_jmeam.o pot_jmeam_spline.o \
+	    pot_meam.o pot_meam_spline.o \
+	    pot_pair.o pot_pair_spline.o
+
+meamz: $(OBJS) $(OPT_OBJS)
+	        $(CXX) $(OBJS) $(OPT_OBJS) -o $@ $(LIBS)
+
+$(OBJS): %.o: %.cpp
+	        $(CXX) $(CXXFLAGS) $(INC) -c $<
+
+$(OPT_OBJS): %.o: %.cpp
+		$(CXX) $(OPT_CXXFLAGS) $(INC) -c $<
+
+clean:
+	        rm -fr *.o

@@ -1,0 +1,5 @@
+#!/bin/bash -f
+
+source /etc/profile
+
+module swap PrgEnv-intel PrgEnv-gnu
