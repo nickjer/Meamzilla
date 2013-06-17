@@ -1,11 +1,12 @@
 CXX := g++
-CXXFLAGS := -std=c++11 -Ofast -march=corei7 
+CXXFLAGS := -std=c++11 -Ofast -march=corei7
 OPT_CXXFLAGS := ${CXXFLAGS} -funroll-all-loops
 
 INC := -I/usr/include/mpi
 
 LIBS := -lmpi -L/opt/acml5.3.1/gfortran64/lib -lacml
 
+BUILDNAME := meamz
 OBJDIR := build
 SRCDIR := src
 
@@ -49,7 +50,7 @@ OPT_OBJS := pot_eam.o pot_eam_spline.o \
 PATH_OBJS := $(patsubst %.o,$(OBJDIR)/%.o,$(OBJS))
 PATH_OPT_OBJS := $(patsubst %.o,$(OBJDIR)/%.o,$(OPT_OBJS))
 
-$(OBJDIR)/meamz: $(PATH_OBJS) $(PATH_OPT_OBJS) | $(OBJDIR)
+$(OBJDIR)/$(BUILDNAME): $(PATH_OBJS) $(PATH_OPT_OBJS) | $(OBJDIR)
 	        $(CXX) $(PATH_OBJS) $(PATH_OPT_OBJS) -o $@ $(LIBS)
 
 $(PATH_OBJS): $(OBJDIR)/%.o: %.cpp | $(OBJDIR)
