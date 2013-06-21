@@ -31,11 +31,12 @@ PotEAMSpline::~PotEAMSpline()
 
 double PotEAMSpline::compute(const Comm& comm, ErrorVec *error_vec)
 {
+  // basis type for all phi fn's
   String common_basis_type = pot_fns_[0].get_common_basis_type();
 
-  for (PotFns& pot_fn : pot_fns_)
-    if (common_basis_type != pot_fn.get_common_basis_type())
-      common_basis_type = "undefined";
+  // basis type for all rho fn's
+  if (common_basis_type != pot_fns_[1].get_common_basis_type())
+    common_basis_type = "undefined";
 
   if (common_basis_type == "undefined") fast_compute<Spline>(comm, error_vec);  // default
 #define BASIS_CLASS
@@ -54,11 +55,12 @@ double PotEAMSpline::compute(const Comm& comm, ErrorVec *error_vec)
 
 void PotEAMSpline::compute_densities(const Comm& comm, Vector<double> *density_ptr)
 {
+  // basis type for all phi fn's
   String common_basis_type = pot_fns_[0].get_common_basis_type();
 
-  for (PotFns& pot_fn : pot_fns_)
-    if (common_basis_type != pot_fn.get_common_basis_type())
-      common_basis_type = "undefined";
+  // basis type for all rho fn's
+  if (common_basis_type != pot_fns_[1].get_common_basis_type())
+    common_basis_type = "undefined";
 
   if (common_basis_type == "undefined") fast_compute_densities<Spline>(comm, density_ptr);  // default
 #define BASIS_CLASS
@@ -111,9 +113,9 @@ double PotEAMSpline::fast_compute(const Comm& comm, ErrorVec *error_vec)
   std::vector<T *> rho_fns;
   for (Basis*& fn : pot_fns_[1].fns)
     rho_fns.push_back(static_cast<T *>(fn));
-  std::vector<T *> F_fns;
-  for (Basis*& fn : pot_fns_[2].fns)
-    F_fns.push_back(static_cast<T *>(fn));
+  std::vector<Basis *> F_fns;
+  for (Basis*& fn : pot_fns_[2].fns) // allow embedding fn to be any basis
+    F_fns.push_back(fn);
 
   // Set up constraint error (error from density going out of bounds of embedding function)
   Vector<double> constraint_err(mmz->config->ncells,0.0);
@@ -176,7 +178,7 @@ double PotEAMSpline::fast_compute(const Comm& comm, ErrorVec *error_vec)
     }
 
     // Add energy contribution from embedding function and get gradient in one step
-    cell.energy += F_fns[atom_i.F_idx]->T::splint_comb(rho_val, &dF);
+    cell.energy += F_fns[atom_i.F_idx]->eval_comb(rho_val, &dF);
 
     // Loop over pairs for this atom to compute EAM force
     for (Pair*& pair_ij_ptr : atom_i.pairs) {
@@ -199,7 +201,7 @@ double PotEAMSpline::fast_compute(const Comm& comm, ErrorVec *error_vec)
   for (int i=0; i<mmz->potlist->get_ntypes(); ++i) {
 	  double rho_i = F_fns[i]->get_min_rcut();
 	  double rho_f = F_fns[i]->get_max_rcut();
-    double eam_error = DUMMY_WEIGHT * F_fns[i]->T::splint_grad(0.5 * (rho_i + rho_f));
+    double eam_error = DUMMY_WEIGHT * F_fns[i]->eval_grad(0.5 * (rho_i + rho_f));
     error_sum_ += eam_error * eam_error;
     if (error_vec && comm.is_root()) error_vec->push_back(eam_error);
   }
