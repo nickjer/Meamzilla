@@ -369,9 +369,6 @@ void Spline5Eq::write_lmp_basis_fn(std::ostream& oss) const
   // 2nd line is BC's
   oss << splint_grad(0, 0.0) << " " << splint_grad(nknots_-2, 1.0) << std::endl;
 
-  // 3rd line is meaningless
-  oss << "0 0 0 0" << std::endl;
-
   // Output knot values
   for (int k=0; k<nknots_; ++k)
     oss << x_[k] << " " << y_[k] << " " << ypp_[k] << " " << yp4_[k] << std::endl;

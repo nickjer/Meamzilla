@@ -347,6 +347,7 @@ void PotList::write_lmps(String filename)
 
       if (ofs) {
         ofs << comment_line_ << std::endl;
+        ofs << "#P " << pot_type_ << std::endl;
         ofs << Potential::Output::Lmps << *pots_[i];
       }
 
