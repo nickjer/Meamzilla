@@ -1,3 +1,14 @@
+/* ----------------------------------------------------------------------
+   MEAMZ - MEAM optimiZer
+   http://github.com/nickjer/Meamzilla
+   Jeremy Nicklas, nicklas.2@buckeyemail.osu.edu
+
+   Copyright (2013) Jeremy Nicklas.  All rights reserved.  This code
+   is not free to use without the express permission of the author.
+
+   See the README file in the top-level MEAMZ directory.
+------------------------------------------------------------------------- */
+
 #include "pots/pot_pair/atom_pair.h"
 #include "pots/pot_pair_spline/atom_pair_spline.h"
 #include "pots/pot_eam/atom_eam.h"
