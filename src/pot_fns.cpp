@@ -313,7 +313,7 @@ void PotFns::write_pot_fns(std::ostream& oss) const
 void PotFns::write_lmp_fns(std::ostream& oss) const
 {
   for (Basis* fn : fns) {
-    oss << "#B " << fn->get_basis_type() << std::endl;
+    oss << fn->get_basis_type() << std::endl;
     fn->write_lmp_basis_fn(oss);
   }
 
