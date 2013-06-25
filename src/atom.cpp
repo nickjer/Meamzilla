@@ -40,8 +40,20 @@ void Atom::setup_atom(int _idx, int _typ, Vect _pos, Vect _force)
   pos = _pos;
   force0 = _force;
   atom_idx = _idx;
+
+  setup_atom_pot(); // setup potential specific atom properties
   return;
 }
+
+/* ----------------------------------------------------------------------
+   setup potential specific atom properties
+------------------------------------------------------------------------- */
+
+void Atom::setup_atom_pot()
+{
+  return;
+}
+
 
 /* ----------------------------------------------------------------------
    add this pair to list of pairs

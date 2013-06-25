@@ -46,6 +46,7 @@ public:
 
   virtual int cmp_value() const = 0;      // Value used when sorting atoms
   void setup_atom(int, int, Vect, Vect);  // Setup atom with user specified conditions
+  virtual void setup_atom_pot();          // Setup potential specific atom properties
   void push_back(Pair *);                 // Add this pair to list of pairs
   void push_back(Triplet *);              // Add this triplet to list of triplets
 

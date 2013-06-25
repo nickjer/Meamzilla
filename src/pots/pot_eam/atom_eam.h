@@ -33,6 +33,8 @@ public:
 
   virtual AtomEAM* clone() const;  // Copy polymorphic objects
 
+  virtual void setup_atom_pot();   // Setup potential specific atom properties
+
 protected:
 
 private:

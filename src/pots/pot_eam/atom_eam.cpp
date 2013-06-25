@@ -35,3 +35,14 @@ AtomEAM* AtomEAM::clone() const
 {
   return new AtomEAM(*this);
 }
+
+/* ----------------------------------------------------------------------
+   setup potential specific atom properties
+------------------------------------------------------------------------- */
+
+void AtomEAM::setup_atom_pot()
+{
+  F_idx = typ;  // embedding fn depends on origin atom_i's type
+  return;
+}
+
