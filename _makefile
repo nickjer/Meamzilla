@@ -5,6 +5,7 @@ vpath %.cpp $(SRCDIR)/pots/pot_eam
 vpath %.cpp $(SRCDIR)/pots/pot_eam_spline
 vpath %.cpp $(SRCDIR)/pots/pot_meam
 vpath %.cpp $(SRCDIR)/pots/pot_meam_spline
+vpath %.cpp $(SRCDIR)/pots/pot_gmeam
 vpath %.cpp $(SRCDIR)/pots/pot_jmeam
 vpath %.cpp $(SRCDIR)/pots/pot_jmeam_spline
 vpath %.cpp $(SRCDIR)/pots/pot_jmeam2
@@ -33,7 +34,8 @@ OPT_OBJS := pot_eam.o pot_eam_spline.o \
 	    pot_jmeam2.o pot_jmeam2_spline.o \
 	    pot_jmeam.o pot_jmeam_spline.o \
 	    pot_meam.o pot_meam_spline.o \
-	    pot_pair.o pot_pair_spline.o
+	    pot_pair.o pot_pair_spline.o \
+		pot_gmeam.o
 
 PATH_OBJS := $(patsubst %.o,$(OBJDIR)/%.o,$(OBJS))
 PATH_OPT_OBJS := $(patsubst %.o,$(OBJDIR)/%.o,$(OPT_OBJS))
