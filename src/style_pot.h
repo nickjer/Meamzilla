@@ -16,6 +16,7 @@
 #include "pots/pot_meam/pot_meam.h"
 #include "pots/pot_meam_spline/pot_meam_spline.h"
 #include "pots/pot_gmeam/pot_gmeam.h"
+#include "pots/pot_gmeam_spline/pot_gmeam_spline.h"
 #include "pots/pot_jmeam/pot_jmeam.h"
 #include "pots/pot_jmeam_spline/pot_jmeam_spline.h"
 #include "pots/pot_jmeam2/pot_jmeam2.h"
