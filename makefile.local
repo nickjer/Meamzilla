@@ -1,0 +1,13 @@
+CXX := g++
+CXXFLAGS := -std=c++11 -Ofast -march=corei7
+OPT_CXXFLAGS := ${CXXFLAGS} -funroll-all-loops
+
+INC := -I/usr/include/mpi
+
+LIBS := -lmpi -L/opt/acml5.3.1/gfortran64/lib -lacml
+
+BUILDNAME := meamz
+OBJDIR := build
+SRCDIR := src
+
+include _makefile

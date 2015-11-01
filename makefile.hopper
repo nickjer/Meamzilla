@@ -1,0 +1,13 @@
+CXX := CC
+CXXFLAGS := -std=c++11 -Ofast -march=barcelona
+OPT_CXXFLAGS := ${CXXFLAGS} -funroll-all-loops
+
+INC := 
+
+LIBS := 
+
+BUILDNAME := meamz-hopper
+OBJDIR := build
+SRCDIR := src
+
+include _makefile

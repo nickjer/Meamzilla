@@ -1,0 +1,13 @@
+CXX := mpicxx
+CXXFLAGS := -std=c++11 -Ofast -march=corei7
+OPT_CXXFLAGS := ${CXXFLAGS} -funroll-all-loops
+
+INC := 
+
+LIBS := ${MKL_LIBS}
+
+BUILDNAME := meamz-oakley
+OBJDIR := build
+SRCDIR := src
+
+include _makefile

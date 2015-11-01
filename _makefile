@@ -1,15 +1,3 @@
-CXX := mpicxx
-CXXFLAGS := -std=c++11 -Ofast -march=corei7
-OPT_CXXFLAGS := ${CXXFLAGS} -funroll-all-loops
-
-INC := -I${MKL_INC}
-
-LIBS := ${MKL}
-
-BUILDNAME := meamz-carver
-OBJDIR := build
-SRCDIR := src
-
 vpath %.cpp $(SRCDIR)
 vpath %.cpp $(SRCDIR)/pots/pot_pair
 vpath %.cpp $(SRCDIR)/pots/pot_pair_spline
