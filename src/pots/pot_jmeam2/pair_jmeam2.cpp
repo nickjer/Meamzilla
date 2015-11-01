@@ -53,7 +53,7 @@ bool PairJMEAM2::check_pair(Atom *atom, Potential *pot)
 
   // Setup potential
   PotFns& phi = pot->at(0);
-  phi_idx = phi.get_alloy_idx(typ1, typ2);
+  phi_idx = phi.get_2body_alloy_idx(typ1, typ2);
   Basis& phi_fn = *phi.fns[phi_idx];
 
   // Check if pair lies inside radial cutoff
@@ -66,7 +66,7 @@ bool PairJMEAM2::check_pair(Atom *atom, Potential *pot)
 
   // Setup potential
   PotFns& rho = pot->at(1);
-  rho_idx = rho.get_alloy_idx(typ1, typ2);
+  rho_idx = rho.get_2body_alloy_idx(typ1, typ2);
   Basis& rho_fn = *rho.fns[rho_idx];
 
   // Check if pair lies inside radial cutoff
@@ -79,7 +79,7 @@ bool PairJMEAM2::check_pair(Atom *atom, Potential *pot)
 
   // Setup potential
   PotFns& f = pot->at(3);
-  f_idx = f.get_alloy_idx(typ1, typ2);
+  f_idx = f.get_2body_alloy_idx(typ1, typ2);
   Basis& f_fn = *f.fns[f_idx];
 
   // Check if pair lies inside radial cutoff
@@ -92,7 +92,7 @@ bool PairJMEAM2::check_pair(Atom *atom, Potential *pot)
 
   // Setup potential
   PotFns& p = pot->at(5);
-  p_idx = p.get_alloy_idx(typ1, typ2);
+  p_idx = p.get_2body_alloy_idx(typ1, typ2);
   Basis& p_fn = *p.fns[p_idx];
 
   // Check if pair lies inside radial cutoff
@@ -105,7 +105,7 @@ bool PairJMEAM2::check_pair(Atom *atom, Potential *pot)
 
   // Setup potential
   PotFns& p2 = pot->at(7);
-  p2_idx = p2.get_alloy_idx(typ1, typ2);
+  p2_idx = p2.get_2body_alloy_idx(typ1, typ2);
   Basis& p2_fn = *p2.fns[p2_idx];
 
   // Check if pair lies inside radial cutoff

@@ -55,7 +55,7 @@ bool PairPairSpline::check_pair(Atom *atom, Potential *pot)
 
   // Setup spline potential
   PotFns& phi = pot->at(0);
-  phi_idx = phi.get_alloy_idx(typ1, typ2);
+  phi_idx = phi.get_2body_alloy_idx(typ1, typ2);
   Spline& phi_spline = *static_cast<Spline*>(phi.fns[phi_idx]);
 
   // Get lower bound knot and shift for this 'r' value

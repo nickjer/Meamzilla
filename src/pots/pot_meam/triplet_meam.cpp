@@ -53,11 +53,11 @@ bool TripletMEAM::check_triplet(Atom *atom, Potential *pot)
 
   // Setup potentials
   PotFns& f = pot->at(3);
-  Basis& f_ij_fn = *f.fns[ f.get_alloy_idx(typ_i, typ_j) ];
-  Basis& f_ik_fn = *f.fns[ f.get_alloy_idx(typ_i, typ_k) ];
+  Basis& f_ij_fn = *f.fns[ f.get_2body_alloy_idx(typ_i, typ_j) ];
+  Basis& f_ik_fn = *f.fns[ f.get_2body_alloy_idx(typ_i, typ_k) ];
 
   PotFns& g = pot->at(4);
-  g_idx = g.get_alloy_idx(typ_i, 0);  // only depends on origin atom_i's type
+  g_idx = g.get_3body_alloy_idx(typ_i, typ_j, typ_k);  // only depends on origin atom_i's type
   //Basis& g_fn = *g.fns[g_idx];
 
   // Check if both pairs lie inside radial cutoffs of respective fn's

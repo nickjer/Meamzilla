@@ -111,21 +111,61 @@ double PotFns::get_max_y_mag() const
 }
 
 /* ----------------------------------------------------------------------
-   get index of alloy basis fn knowing types of atoms
+   get index of 1-body alloy basis fn knowing types of atoms
 ------------------------------------------------------------------------- */
 
-int PotFns::get_alloy_idx(int typ_i, int typ_j) const
+int PotFns::get_1body_alloy_idx(int typ_i) const
 {
   switch(alloy_type_) {
   case AlloyType::Atom_i:
     return typ_i;
     break;
-  case AlloyType::Atom_j:
+  default:
+    return -1;
+  }
+}
+
+/* ----------------------------------------------------------------------
+   get index of 2-body alloy basis fn knowing types of atoms
+------------------------------------------------------------------------- */
+
+int PotFns::get_2body_alloy_idx(int typ_i, int typ_j) const
+{
+  switch(alloy_type_) {
+  case AlloyType::Pair_i:
+    return typ_i;
+    break;
+  case AlloyType::Pair_j:
     return typ_j;
     break;
   case AlloyType::Pair_ij:
     return (typ_i <= typ_j) ? typ_i * ntypes_ + typ_j - ((typ_i * (typ_i + 1)) / 2) :
                               typ_j * ntypes_ + typ_i - ((typ_j * (typ_j + 1)) / 2);
+    break;
+  default:
+    return -1;
+  }
+}
+
+/* ----------------------------------------------------------------------
+   get index of 3-body alloy basis fn knowing types of atoms
+------------------------------------------------------------------------- */
+
+int PotFns::get_3body_alloy_idx(int typ_i, int typ_j, int typ_k) const
+{
+  switch(alloy_type_) {
+  case AlloyType::Triplet_i:
+    return typ_i;
+    break;
+  case AlloyType::Triplet_j:
+    return typ_j;
+    break;
+  case AlloyType::Triplet_k:
+    return typ_k;
+    break;
+  case AlloyType::Triplet_i_jk:
+    return (typ_j <= typ_k) ? typ_i * ntypes_ * (ntypes_ + 1)/2 + typ_j * ntypes_ + typ_k - ((typ_j * (typ_j + 1)) / 2) :
+                              typ_i * ntypes_ * (ntypes_ + 1)/2 + typ_k * ntypes_ + typ_j - ((typ_k * (typ_k + 1)) / 2);
     break;
   default:
     return -1;
@@ -231,8 +271,10 @@ void PotFns::refresh_basis()
    initialize size of alloy fns and fill with correct basis
    and dependency
       Atom_i,   // depends on atom in question, atom_i (A, B)
-      Atom_j,   // depends on neighbor atom, atom_j (A, B)
+      Pair_i,   // depends on atom in question for pair fn, atom_i (A, B)
+      Pair_j,   // depends on neighbor atom for pair fn, atom_j (A, B)
       Pair_ij   // depends on pair of atoms i and j (AA, AB, BB)
+      ...
 ------------------------------------------------------------------------- */
 
 void PotFns::setup_pot_fns(int ntypes, AlloyType alloy_fn_type, FnType fn_type)
@@ -244,15 +286,20 @@ void PotFns::setup_pot_fns(int ntypes, AlloyType alloy_fn_type, FnType fn_type)
   // Resize alloy_pots based on number of atom types and alloy fn type
   switch(alloy_type_) {
   case AlloyType::Atom_i:
-    n_fns = ntypes;
-    fns.resize(n_fns, nullptr);
-    break;
-  case AlloyType::Atom_j:
+  case AlloyType::Pair_i:
+  case AlloyType::Pair_j:
+  case AlloyType::Triplet_i:
+  case AlloyType::Triplet_j:
+  case AlloyType::Triplet_k:
     n_fns = ntypes;
     fns.resize(n_fns, nullptr);
     break;
   case AlloyType::Pair_ij:
     n_fns = (ntypes * (ntypes + 1))/2;
+    fns.resize(n_fns, nullptr);
+    break;
+  case AlloyType::Triplet_i_jk:
+    n_fns = ntypes * ((ntypes * (ntypes + 1))/2);
     fns.resize(n_fns, nullptr);
     break;
   default:

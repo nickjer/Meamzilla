@@ -38,11 +38,11 @@ PotEAM::PotEAM(class Meamzilla *mmz, int ntypes) : PotPair(mmz, ntypes), embed_e
 
   // Density potential (rho) has n potentials (depending on atom j, the neighbor) and is a radial potential
   // For types A and B, you have rho_A, rho_B
-  pot_fns_[1].setup_pot_fns(ntypes, PotFns::AlloyType::Atom_j, PotFns::FnType::Radial);
+  pot_fns_[1].setup_pot_fns(ntypes, PotFns::AlloyType::Pair_j, PotFns::FnType::Radial);
 
   // Embedding fn has n potentials (depending on atom i, the original atom) and is NOT a radial potential
   // For types A and B, you have F_A, F_B
-  pot_fns_[2].setup_pot_fns(ntypes, PotFns::AlloyType::Atom_i, PotFns::FnType::Undefined);
+  pot_fns_[2].setup_pot_fns(ntypes, PotFns::AlloyType::Pair_i, PotFns::FnType::Undefined);
 }
 
 /* ---------------------------------------------------------------------- */

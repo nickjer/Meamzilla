@@ -43,7 +43,7 @@ PotMEAM::PotMEAM(class Meamzilla *mmz, int ntypes) : PotEAM(mmz, ntypes)
 
   // g- potential has n potentials (depending on atom i, the original atom) and is NOT a radial potential
   // For types A and B, you have g_A, g_B
-  pot_fns_[4].setup_pot_fns(ntypes, PotFns::AlloyType::Atom_i, PotFns::FnType::Undefined);
+  pot_fns_[4].setup_pot_fns(ntypes, PotFns::AlloyType::Triplet_i, PotFns::FnType::Undefined);
 }
 
 /* ---------------------------------------------------------------------- */

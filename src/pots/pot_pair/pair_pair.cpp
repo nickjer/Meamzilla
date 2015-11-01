@@ -53,7 +53,7 @@ bool PairPair::check_pair(Atom *atom, Potential *pot)
 
   // Setup potential
   PotFns& phi = pot->at(0);
-  phi_idx = phi.get_alloy_idx(typ1, typ2);
+  phi_idx = phi.get_2body_alloy_idx(typ1, typ2);
   Basis& phi_fn = *phi.fns[phi_idx];
 
   // Check if pair lies inside radial cutoff

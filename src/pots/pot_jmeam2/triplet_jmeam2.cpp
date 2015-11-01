@@ -53,11 +53,11 @@ bool TripletJMEAM2::check_triplet(Atom *atom, Potential *pot)
 
   // Setup potentials
   PotFns& f = pot->at(3);
-  Basis& f_ij_fn = *f.fns[ f.get_alloy_idx(typ_i, typ_j) ];
-  Basis& f_ik_fn = *f.fns[ f.get_alloy_idx(typ_i, typ_k) ];
+  Basis& f_ij_fn = *f.fns[ f.get_2body_alloy_idx(typ_i, typ_j) ];
+  Basis& f_ik_fn = *f.fns[ f.get_2body_alloy_idx(typ_i, typ_k) ];
 
   PotFns& g = pot->at(4);
-  g_idx = g.get_alloy_idx(typ_i, 0);  // only depends on origin atom_i's type
+  g_idx = g.get_3body_alloy_idx(typ_i, typ_j, typ_k);  // only depends on origin atom_i's type
   //Basis& g_fn = *g.fns[g_idx];
 
   // Check if both pairs lie inside radial cutoffs of respective fn's
@@ -66,11 +66,11 @@ bool TripletJMEAM2::check_triplet(Atom *atom, Potential *pot)
 
   // Setup potentials
   PotFns& p = pot->at(5);
-  Basis& p_ij_fn = *p.fns[ p.get_alloy_idx(typ_i, typ_j) ];
-  Basis& p_ik_fn = *p.fns[ p.get_alloy_idx(typ_i, typ_k) ];
+  Basis& p_ij_fn = *p.fns[ p.get_2body_alloy_idx(typ_i, typ_j) ];
+  Basis& p_ik_fn = *p.fns[ p.get_2body_alloy_idx(typ_i, typ_k) ];
 
   PotFns& q = pot->at(6);
-  q_idx = q.get_alloy_idx(typ_i, 0);  // only depends on origin atom_i's type
+  q_idx = q.get_3body_alloy_idx(typ_i, typ_j, typ_k);  // only depends on origin atom_i's type
   //Basis& q_fn = *q.fns[q_idx];
 
   // Check if both pairs lie inside radial cutoffs of respective fn's
@@ -79,11 +79,11 @@ bool TripletJMEAM2::check_triplet(Atom *atom, Potential *pot)
 
   // Setup potentials
   PotFns& p2 = pot->at(7);
-  Basis& p2_ij_fn = *p2.fns[ p2.get_alloy_idx(typ_i, typ_j) ];
-  Basis& p2_ik_fn = *p2.fns[ p2.get_alloy_idx(typ_i, typ_k) ];
+  Basis& p2_ij_fn = *p2.fns[ p2.get_2body_alloy_idx(typ_i, typ_j) ];
+  Basis& p2_ik_fn = *p2.fns[ p2.get_2body_alloy_idx(typ_i, typ_k) ];
 
   PotFns& q2 = pot->at(8);
-  q2_idx = q2.get_alloy_idx(typ_i, 0);  // only depends on origin atom_i's type
+  q2_idx = q2.get_3body_alloy_idx(typ_i, typ_j, typ_k);  // only depends on origin atom_i's type
   //Basis& q2_fn = *q2.fns[q_idx];
 
   // Check if both pairs lie inside radial cutoffs of respective fn's

@@ -43,7 +43,7 @@ PotJMEAM2::PotJMEAM2(class Meamzilla *mmz, int ntypes) : PotJMEAM(mmz, ntypes)
 
   // q- potential has n potentials (depending on atom i, the original atom) and is NOT a radial potential
   // For types A and B, you have q_A, q_B
-  pot_fns_[8].setup_pot_fns(ntypes, PotFns::AlloyType::Atom_i, PotFns::FnType::Undefined);
+  pot_fns_[8].setup_pot_fns(ntypes, PotFns::AlloyType::Triplet_i, PotFns::FnType::Undefined);
 }
 
 /* ---------------------------------------------------------------------- */

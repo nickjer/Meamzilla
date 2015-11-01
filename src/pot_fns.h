@@ -36,7 +36,9 @@ public:
   int is_radial() const;                    // Returns whether this potential function is radial or not
   double get_max_rcut() const;              // Get maximum radial cutoff from all potentials
   double get_max_y_mag() const;             // Get maximum |y| value from all fns in this potential
-  int get_alloy_idx(int, int) const;        // Get index of alloy basis fn knowing types of atoms
+  int get_1body_alloy_idx(int) const;       // Get index of 1-body alloy basis fn knowing types of atoms
+  int get_2body_alloy_idx(int, int) const;       // Get index of 2-body alloy basis fn knowing types of atoms
+  int get_3body_alloy_idx(int, int, int) const;  // Get index of 3-body alloy basis fn knowing types of atoms
   String get_common_basis_type() const;     // Get the basis type common among all basis fns for this pot fn (return "undefined" if no common type)
   int get_ncoeff() const;                   // Get number of adjustable coefficients in basis fns
   double& coeff(int&);                      // Return value of specified coeffient
@@ -60,9 +62,8 @@ protected:
 
 private:
   AlloyType alloy_type_;         // Each potential fn will depend on alloy types
-                                 // Atom_i  = depends on atom in question, atom_i (A, B)
-                                 // Atom_j  = depends on other atom, atom_j (A, B)
-                                 // Pair_ij = depends on pair of atoms (AA, AB, BB)
+                                 // See:
+                                 //     PotFns::AlloyType
 
   FnType fn_type_;               // Whether this potential fn is a radial fn or not
 
@@ -72,10 +73,15 @@ private:
 // Define the alloy dependency for this alloy potential
 enum class PotFns::AlloyType
 {
-  Atom_i,     // depends on atom in question, atom_i (A, B)
-  Atom_j,     // depends on neighbor atom, atom_j (A, B)
-  Pair_ij,    // depends on pair of atoms i and j (AA, AB, BB)
-  Undefined   // unknown and will kill the program
+  Atom_i,       // depends on atom in question, atom_i (A, B)
+  Pair_i,       // depends on atom in question for pair fn, atom_i (A, B)
+  Pair_j,       // depends on neighbor atom for pair fn, atom_j (A, B)
+  Pair_ij,      // depends on pair of atoms i and j (AA, AB, BB)
+  Triplet_i,    // depends on atom in question for triplet fn, atom_i (A, B)
+  Triplet_j,    // depends on neighbor atom for triplet fn, atom_j (A, B)
+  Triplet_k,    // depends on neighbor atom for triplet fn, atom_k (A, B)
+  Triplet_i_jk, // depends on atom and combination of pairs (AAA, AAB, ABB, BAA, BAB, BBB)
+  Undefined     // unknown and will kill the program
 };
 
 // Define the functional form for this alloy potential
